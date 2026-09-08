@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Edutem — Интерактивный тест</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #eef4ff, #f8fbff);
+            color: #172033;
+        }
+
+        /* Шапка */
+        header {
+            height: 75px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 7%;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.07);
+        }
+
+        .logo {
+            font-size: 27px;
+            font-weight: 800;
+            color: #3867ff;
+            letter-spacing: -1px;
+        }
+
+        .logo span {
+            color: #172033;
+        }
+
+        .progress-text {
+            font-size: 15px;
+            color: #697386;
+        }
+
+        /* Основная часть */
+        main {
+            width: 90%;
+            max-width: 850px;
+            margin: 45px auto;
+        }
+
+        .welcome {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .welcome h1 {
+            font-size: 38px;
+            margin-bottom: 10px;
+        }
+
+        .welcome p {
+            color: #697386;
+            font-size: 17px;
+        }
+
+        /* Карточка */
+        .quiz-card {
+            background: white;
+            border-radius: 24px;
+            padding: 35px;
+            box-shadow: 0 12px 40px rgba(31, 55, 100, 0.10);
+        }
+
+        .question-number {
+            color: #3867ff;
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+
+        .question {
+            font-size: 25px;
+            font-weight: 700;
+            line-height: 1.35;
+            margin-bottom: 25px;
+        }
+
+        /* Варианты */
+        .answers {
+            display: grid;
+            gap: 13px;
+        }
+
+        .answer {
+            border: 2px solid #e4e9f2;
+            background: #fff;
+            padding: 17px 20px;
+            border-radius: 14px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: 0.2s;
+        }
+
+        .answer:hover {
+            border-color: #3867ff;
+            background: #f4f7ff;
+            transform: translateY(-1px);
+        }
+
+        .answer.selected {
+            border-color: #3867ff;
+            background: #edf2ff;
+            color: #2451df;
+            font-weight: 600;
+        }
+
+        /* Кнопки */
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            gap: 15px;
+        }
+
+        button {
+            border: none;
+            padding: 14px 25px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .next-btn {
+            background: #3867ff;
+            color: white;
+            margin-left: auto;
+        }
+
+        .next-btn:hover {
+            background: #2853dc;
+            transform: translateY(-2px);
+        }
+
+        .next-btn:disabled {
+            background: #b8c3dc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .restart-btn {
+            background: #172033;
+            color: white;
+        }
+
+        .restart-btn:hover {
+            background: #2b354c;
+        }
+
+        /* Индикатор */
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e8edf6;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            width: 20%;
+            background: #3867ff;
+            border-radius: 10px;
+            transition: 0.3s;
+        }
+
+        /* Результат */
+        .result {
+            display: none;
+            text-align: center;
+        }
+
+        .result-icon {
+            width: 90px;
+            height: 90px;
+            background: #edf2ff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 42px;
+        }
+
+        .result h2 {
+            font-size: 32px;
+            margin-bottom: 12px;
+        }
+
+        .score {
+            font-size: 52px;
+            font-weight: 800;
+            color: #3867ff;
+            margin: 15px 0;
+        }
+
+        .result p {
+            color: #697386;
+            font-size: 17px;
+            margin-bottom: 25px;
+        }
+
+        /* Мобильная версия */
+        @media (max-width: 600px) {
+            header {
+                padding: 0 5%;
+            }
+
+            .logo {
+                font-size: 23px;
+            }
+
+            main {
+                width: 94%;
+                margin: 30px auto;
+            }
+
+            .welcome h1 {
+                font-size: 30px;
+            }
+
+            .quiz-card {
+                padding: 23px;
+                border-radius: 18px;
+            }
+
+            .question {
+                font-size: 21px;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+            .next-btn {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">Edu<span>tem</span></div>
+    <div class="progress-text" id="progressText">
+        Вопрос 1 из 5
+    </div>
+</header>
+
+<main>
+
+    <div class="welcome">
+        <h1>Интерактивный тест</h1>
+        <p>Проверь свои знания и узнай результат</p>
+    </div>
+
+    <div class="quiz-card">
+
+        <!-- Прогресс -->
+        <div class="progress-bar">
+            <div class="progress" id="progress"></div>
+        </div>
+
+        <!-- Тест -->
+        <div id="quiz">
+
+            <div class="question-number" id="questionNumber">
+                Вопрос 1
+            </div>
+
+            <div class="question" id="question">
+                Загрузка вопроса...
+            </div>
+
+            <div class="answers" id="answers"></div>
+
+            <div class="buttons">
+                <button
+                    class="next-btn"
+                    id="nextBtn"
+                    onclick="nextQuestion()"
+                    disabled>
+                    Далее →
+                </button>
+            </div>
+
+        </div>
+
+        <!-- Результат -->
+        <div class="result" id="result">
+
+            <div class="result-icon">
+                🏆
+            </div>
+
+            <h2>Тест завершён!</h2>
+
+            <div class="score" id="score">
+                0/5
+            </div>
+
+            <p id="resultText">
+                Отличный результат!
+            </p>
+
+            <button class="restart-btn" onclick="restartQuiz()">
+                Пройти снова
+            </button>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<script>
+
+    /* ВОПРОСЫ ТЕСТА */
+
+    const questions = [
+
+        {
+            question: "Какой язык используется для создания структуры веб-страницы?",
+            answers: [
+                "HTML",
+                "CSS",
+                "Python",
+                "SQL"
+            ],
+            correct: 0
+        },
+
+        {
+            question: "Какой язык отвечает преимущественно за внешний вид сайта?",
+            answers: [
+                "Java",
+                "CSS",
+                "HTML",
+                "PHP"
+            ],
+            correct: 1
+        },
+
+        {
+            question: "Что означает сокращение HTML?",
+            answers: [
+                "Hyper Text Markup Language",
+                "High Text Machine Language",
+                "Home Tool Markup Language",
+                "Hyperlink Text Management Language"
+            ],
+            correct: 0
+        },
+
+        {
+            question: "Какой тег используется для создания заголовка первого уровня?",
+            answers: [
+                "<p>",
+                "<h1>",
+                "<title>",
+                "<header>"
+            ],
+            correct: 1
+        },
+
+        {
+            question: "Какой тег используется для создания ссылки в HTML?",
+            answers: [
+                "<link>",
+                "<url>",
+                "<a>",
+                "<href>"
+            ],
+            correct: 2
+        }
+
+    ];
+
+
+    /* Переменные */
+
+    let currentQuestion = 0;
+    let score = 0;
+    let selectedAnswer = null;
+
+
+    /* Получаем элементы */
+
+    const questionElement =
+        document.getElementById("question");
+
+    const answersElement =
+        document.getElementById("answers");
+
+    const questionNumberElement =
+        document.getElementById("questionNumber");
+
+    const progressElement =
+        document.getElementById("progress");
+
+    const progressTextElement =
+        document.getElementById("progressText");
+
+    const nextButton =
+        document.getElementById("nextBtn");
+
+    const quizElement =
+        document.getElementById("quiz");
+
+    const resultElement =
+        document.getElementById("result");
+
+    const scoreElement =
+        document.getElementById("score");
+
+    const resultTextElement =
+        document.getElementById("resultText");
+
+
+    /* Показываем вопрос */
+
+    function showQuestion() {
+
+        selectedAnswer = null;
+
+        nextButton.disabled = true;
+
+        const current = questions[currentQuestion];
+
+        questionNumberElement.textContent =
+            "Вопрос " + (currentQuestion + 1);
+
+        progressTextElement.textContent =
+            "Вопрос " + (currentQuestion + 1) +
+            " из " + questions.length;
+
+        questionElement.textContent =
+            current.question;
+
+        answersElement.innerHTML = "";
+
+        current.answers.forEach((answer, index) => {
+
+            const button = document.createElement("div");
+
+            button.classList.add("answer");
+
+            button.textContent = answer;
+
+            button.onclick = function () {
+
+                selectAnswer(index, button);
+
+            };
+
+            answersElement.appendChild(button);
+
+        });
+
+
+        /* Прогресс */
+
+        const progress =
+            ((currentQuestion + 1) /
+            questions.length) * 100;
+
+        progressElement.style.width =
+            progress + "%";
+    }
+
+
+    /* Выбор ответа */
+
+    function selectAnswer(index, element) {
+
+        selectedAnswer = index;
+
+        const allAnswers =
+            document.querySelectorAll(".answer");
+
+        allAnswers.forEach(answer => {
+            answer.classList.remove("selected");
+        });
+
+        element.classList.add("selected");
+
+        nextButton.disabled = false;
+    }
+
+
+    /* Следующий вопрос */
+
+    function nextQuestion() {
+
+        if (selectedAnswer === null) {
+            return;
+        }
+
+        if (
+            selectedAnswer ===
+            questions[currentQuestion].correct
+        ) {
+            score++;
+        }
+
+        currentQuestion++;
+
+        if (currentQuestion < questions.length) {
+
+            showQuestion();
+
+        } else {
+
+            showResult();
+
+        }
+    }
+
+
+    /* Результат */
+
+    function showResult() {
+
+        quizElement.style.display = "none";
+
+        resultElement.style.display = "block";
+
+        scoreElement.textContent =
+            score + "/" + questions.length;
+
+        let text = "";
+
+        if (score === 5) {
+
+            text = "Идеальный результат! Ты отлично знаешь HTML.";
+
+        } else if (score >= 4) {
+
+            text = "Отличный результат! Остался всего один шаг до идеала.";
+
+        } else if (score >= 3) {
+
+            text = "Хороший результат! Немного практики — и будет ещё лучше.";
+
+        } else if (score >= 1) {
+
+            text = "Неплохо! Попробуй пройти тест ещё раз.";
+
+        } else {
+
+            text = "Не расстраивайся. Повтори материал и попробуй снова.";
+
+        }
+
+        resultTextElement.textContent = text;
+    }
+
+
+    /* Перезапуск */
+
+    function restartQuiz() {
+
+        currentQuestion = 0;
+
+        score = 0;
+
+        selectedAnswer = null;
+
+        resultElement.style.display = "none";
+
+        quizElement.style.display = "block";
+
+        showQuestion();
+    }
+
+
+    /* Запускаем тест */
+
+    showQuestion();
+
+</script>
+
+</body>
+</html>
+```

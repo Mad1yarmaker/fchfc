@@ -1,0 +1,1532 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>CreativeTeam — Генератор IT-идей</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f5f7ff;
+    color: #182033;
+    min-height: 100vh;
+}
+
+/* ===== HEADER ===== */
+
+header {
+    height: 76px;
+    background: white;
+    border-bottom: 1px solid #e8eaf2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 7%;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 22px;
+    font-weight: 800;
+}
+
+.logo-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 13px;
+    background: linear-gradient(135deg, #6c5ce7, #00b4d8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 21px;
+    box-shadow: 0 7px 20px rgba(108, 92, 231, .25);
+}
+
+.logo span {
+    color: #6c5ce7;
+}
+
+.header-badge {
+    padding: 9px 15px;
+    background: #f0efff;
+    color: #6253d8;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+/* ===== MAIN ===== */
+
+main {
+    width: 86%;
+    max-width: 1250px;
+    margin: auto;
+}
+
+/* ===== HERO ===== */
+
+.hero {
+    text-align: center;
+    padding: 65px 20px 35px;
+}
+
+.hero-label {
+    display: inline-block;
+    padding: 8px 14px;
+    background: #eceaff;
+    color: #6355d9;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 18px;
+}
+
+.hero h1 {
+    font-size: 48px;
+    line-height: 1.1;
+    margin-bottom: 18px;
+}
+
+.hero h1 span {
+    background: linear-gradient(90deg, #6c5ce7, #00a8cc);
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+.hero p {
+    max-width: 650px;
+    margin: auto;
+    color: #697386;
+    font-size: 17px;
+    line-height: 1.6;
+}
+
+/* ===== GENERATOR ===== */
+
+.generator {
+    background: white;
+    border: 1px solid #e7e9f2;
+    border-radius: 25px;
+    padding: 27px;
+    box-shadow: 0 15px 45px rgba(36, 42, 72, .07);
+    margin-bottom: 25px;
+}
+
+.generator-title {
+    font-size: 18px;
+    font-weight: 800;
+    margin-bottom: 20px;
+}
+
+.controls {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+.field label {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: #5e6677;
+}
+
+select {
+    width: 100%;
+    height: 47px;
+    border: 1px solid #dfe2ec;
+    border-radius: 12px;
+    background: #fafbff;
+    padding: 0 14px;
+    font-size: 14px;
+    color: #273044;
+    outline: none;
+    cursor: pointer;
+}
+
+select:focus {
+    border-color: #7164e8;
+}
+
+.generate-button {
+    width: 100%;
+    margin-top: 20px;
+    border: none;
+    height: 53px;
+    border-radius: 13px;
+    background: linear-gradient(90deg, #6c5ce7, #3f8efc);
+    color: white;
+    font-size: 15px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: .2s;
+    box-shadow: 0 8px 20px rgba(89, 92, 224, .2);
+}
+
+.generate-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 27px rgba(89, 92, 224, .28);
+}
+
+/* ===== IDEA ===== */
+
+.idea {
+    background: white;
+    border: 1px solid #e7e9f2;
+    border-radius: 25px;
+    overflow: hidden;
+    box-shadow: 0 15px 45px rgba(36, 42, 72, .07);
+    margin-bottom: 30px;
+}
+
+.idea-top {
+    background: linear-gradient(135deg, #6254dd, #368fea);
+    color: white;
+    padding: 34px;
+    position: relative;
+}
+
+.idea-top small {
+    opacity: .8;
+    font-size: 13px;
+}
+
+.idea-top h2 {
+    font-size: 31px;
+    margin: 10px 0 13px;
+}
+
+.idea-top p {
+    max-width: 800px;
+    line-height: 1.6;
+    opacity: .93;
+}
+
+.idea-tags {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.tag {
+    background: rgba(255,255,255,.17);
+    border: 1px solid rgba(255,255,255,.2);
+    padding: 7px 11px;
+    border-radius: 20px;
+    font-size: 12px;
+}
+
+.idea-body {
+    padding: 30px;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.info-card {
+    border: 1px solid #e8eaf2;
+    border-radius: 17px;
+    padding: 21px;
+    background: #fbfcff;
+}
+
+.info-card h3 {
+    font-size: 15px;
+    margin-bottom: 10px;
+}
+
+.info-card p {
+    color: #697386;
+    line-height: 1.6;
+    font-size: 14px;
+}
+
+.features {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+.feature {
+    display: flex;
+    gap: 9px;
+    color: #596174;
+    font-size: 14px;
+}
+
+.feature::before {
+    content: "✓";
+    color: #6c5ce7;
+    font-weight: bold;
+}
+
+.tech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.tech span {
+    padding: 8px 11px;
+    background: #efeeff;
+    color: #6254d8;
+    border-radius: 9px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.idea-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 25px;
+}
+
+.action {
+    height: 46px;
+    border-radius: 11px;
+    border: 1px solid #dfe2eb;
+    background: white;
+    padding: 0 18px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.action:hover {
+    background: #f5f4ff;
+}
+
+.action.primary {
+    border: none;
+    background: #6c5ce7;
+    color: white;
+}
+
+.action.primary:hover {
+    background: #5949db;
+}
+
+/* ===== STATS ===== */
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 30px;
+}
+
+.stat {
+    background: white;
+    border: 1px solid #e7e9f2;
+    border-radius: 17px;
+    padding: 21px;
+}
+
+.stat-number {
+    font-size: 28px;
+    font-weight: 800;
+    color: #6254dc;
+}
+
+.stat-title {
+    color: #777f90;
+    font-size: 13px;
+    margin-top: 5px;
+}
+
+/* ===== FAVORITES ===== */
+
+.favorites {
+    background: white;
+    border: 1px solid #e7e9f2;
+    border-radius: 25px;
+    padding: 27px;
+    margin-bottom: 60px;
+}
+
+.section-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.section-title h2 {
+    font-size: 20px;
+}
+
+.clear-button {
+    border: none;
+    background: transparent;
+    color: #e45d6b;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.favorite-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 13px;
+}
+
+.favorite-item {
+    border: 1px solid #e7e9f2;
+    border-radius: 15px;
+    padding: 17px;
+    position: relative;
+    background: #fafbff;
+}
+
+.favorite-item h3 {
+    font-size: 15px;
+    padding-right: 30px;
+    margin-bottom: 7px;
+}
+
+.favorite-item p {
+    font-size: 13px;
+    line-height: 1.5;
+    color: #70788a;
+}
+
+.delete-favorite {
+    position: absolute;
+    right: 13px;
+    top: 13px;
+    width: 27px;
+    height: 27px;
+    border: none;
+    background: #ffecef;
+    color: #dc5362;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.empty {
+    color: #8991a1;
+    text-align: center;
+    padding: 25px;
+    border: 1px dashed #dfe2ea;
+    border-radius: 14px;
+}
+
+/* ===== TOAST ===== */
+
+.toast {
+    position: fixed;
+    right: 25px;
+    bottom: 25px;
+    background: #1e2535;
+    color: white;
+    padding: 13px 18px;
+    border-radius: 12px;
+    opacity: 0;
+    transform: translateY(15px);
+    pointer-events: none;
+    transition: .3s;
+    z-index: 999;
+    font-size: 14px;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ===== FOOTER ===== */
+
+footer {
+    text-align: center;
+    color: #8a91a1;
+    font-size: 13px;
+    padding-bottom: 30px;
+}
+
+/* ===== MOBILE ===== */
+
+@media (max-width: 800px) {
+
+    header {
+        padding: 0 5%;
+    }
+
+    .header-badge {
+        display: none;
+    }
+
+    main {
+        width: 92%;
+    }
+
+    .hero {
+        padding-top: 45px;
+    }
+
+    .hero h1 {
+        font-size: 36px;
+    }
+
+    .controls,
+    .info-grid,
+    .stats,
+    .favorite-list {
+        grid-template-columns: 1fr;
+    }
+
+    .idea-top,
+    .idea-body,
+    .generator,
+    .favorites {
+        padding: 21px;
+    }
+
+    .idea-top h2 {
+        font-size: 25px;
+    }
+
+    .idea-actions {
+        flex-direction: column;
+    }
+
+    .action {
+        width: 100%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+    <div class="logo">
+        <div class="logo-icon">✦</div>
+        Creative<span>Team</span>
+    </div>
+
+    <div class="header-badge">
+        IT Idea Generator
+    </div>
+
+</header>
+
+
+<main>
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div class="hero-label">
+            💡 Генератор IT-проектов
+        </div>
+
+        <h1>
+            Найди идею для<br>
+            <span>своего проекта</span>
+        </h1>
+
+        <p>
+            CreativeTeam помогает быстро придумать интересную
+            и реалистичную идею для сайта, приложения, игры
+            или другого IT-проекта.
+        </p>
+
+    </section>
+
+
+    <!-- GENERATOR -->
+
+    <section class="generator">
+
+        <div class="generator-title">
+            ⚙️ Настрой параметры проекта
+        </div>
+
+        <div class="controls">
+
+            <div class="field">
+
+                <label>Тип проекта</label>
+
+                <select id="type">
+
+                    <option value="all">Любой</option>
+                    <option value="website">Сайт</option>
+                    <option value="app">Мобильное приложение</option>
+                    <option value="ai">AI / Нейросеть</option>
+                    <option value="game">Игра</option>
+                    <option value="education">Образование</option>
+
+                </select>
+
+            </div>
+
+
+            <div class="field">
+
+                <label>Сложность</label>
+
+                <select id="difficulty">
+
+                    <option value="all">Любая</option>
+                    <option value="easy">Лёгкая</option>
+                    <option value="medium">Средняя</option>
+                    <option value="hard">Сложная</option>
+
+                </select>
+
+            </div>
+
+
+            <div class="field">
+
+                <label>Для кого</label>
+
+                <select id="audience">
+
+                    <option value="all">Для всех</option>
+                    <option value="students">Студенты</option>
+                    <option value="school">Школьники</option>
+                    <option value="business">Бизнес</option>
+                    <option value="developers">Разработчики</option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+
+        <button class="generate-button" onclick="generateIdea()">
+            ✨ Сгенерировать идею
+        </button>
+
+    </section>
+
+
+    <!-- IDEA -->
+
+    <section class="idea">
+
+        <div class="idea-top">
+
+            <small>ВАША НОВАЯ ИДЕЯ</small>
+
+            <h2 id="ideaTitle">
+                StudyFlow — умный планировщик обучения
+            </h2>
+
+            <p id="ideaDescription">
+                Сервис, который помогает школьникам и студентам
+                организовать учебу, задачи и подготовку к экзаменам.
+            </p>
+
+            <div class="idea-tags">
+
+                <div class="tag" id="typeTag">
+                    📱 Мобильное приложение
+                </div>
+
+                <div class="tag" id="difficultyTag">
+                    ⚡ Средняя сложность
+                </div>
+
+                <div class="tag" id="audienceTag">
+                    🎓 Студенты
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="idea-body">
+
+            <div class="info-grid">
+
+
+                <div class="info-card">
+
+                    <h3>🎯 Проблема</h3>
+
+                    <p id="problem">
+                        Ученикам сложно правильно распределять время
+                        между уроками, домашними заданиями и подготовкой
+                        к контрольным.
+                    </p>
+
+                </div>
+
+
+                <div class="info-card">
+
+                    <h3>💡 Решение</h3>
+
+                    <p id="solution">
+                        Приложение автоматически составляет удобный
+                        учебный план и напоминает о важных задачах.
+                    </p>
+
+                </div>
+
+
+                <div class="info-card">
+
+                    <h3>🚀 Основные функции</h3>
+
+                    <div class="features" id="features">
+
+                        <div class="feature">
+                            Добавление учебных задач
+                        </div>
+
+                        <div class="feature">
+                            Умное расписание
+                        </div>
+
+                        <div class="feature">
+                            Напоминания
+                        </div>
+
+                        <div class="feature">
+                            Статистика прогресса
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="info-card">
+
+                    <h3>💻 Технологии</h3>
+
+                    <div class="tech" id="tech">
+
+                        <span>HTML</span>
+                        <span>CSS</span>
+                        <span>JavaScript</span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="idea-actions">
+
+                <button class="action primary" onclick="generateIdea()">
+                    🔄 Другая идея
+                </button>
+
+                <button class="action" onclick="copyIdea()">
+                    📋 Скопировать
+                </button>
+
+                <button class="action" onclick="saveFavorite()">
+                    ❤️ В избранное
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- STATISTICS -->
+
+    <section class="stats">
+
+        <div class="stat">
+
+            <div class="stat-number" id="generatedCount">
+                0
+            </div>
+
+            <div class="stat-title">
+                Идей создано
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-number" id="favoriteCount">
+                0
+            </div>
+
+            <div class="stat-title">
+                В избранном
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-number">
+                100+
+            </div>
+
+            <div class="stat-title">
+                Возможных комбинаций
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- FAVORITES -->
+
+    <section class="favorites">
+
+        <div class="section-title">
+
+            <h2>
+                ❤️ Избранные идеи
+            </h2>
+
+            <button class="clear-button" onclick="clearFavorites()">
+                Очистить всё
+            </button>
+
+        </div>
+
+
+        <div class="favorite-list" id="favoriteList">
+
+            <div class="empty">
+                Здесь появятся сохранённые проекты
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <footer>
+        CreativeTeam © 2026 · Генератор идей для IT-проектов
+    </footer>
+
+</main>
+
+
+<div class="toast" id="toast">
+    Готово!
+</div>
+
+
+<script>
+
+/* ==========================================
+   БАЗА ИДЕЙ
+========================================== */
+
+const ideas = [
+
+    {
+        title: "StudyFlow",
+        type: "app",
+        difficulty: "medium",
+        audience: "students",
+
+        description:
+        "Умный планировщик обучения, который помогает студентам организовать занятия и подготовку к экзаменам.",
+
+        problem:
+        "Студентам сложно правильно распределять время между учёбой, домашними заданиями и отдыхом.",
+
+        solution:
+        "Приложение создаёт персональный план обучения и напоминает пользователю о важных задачах.",
+
+        features: [
+            "Добавление учебных задач",
+            "Умное расписание",
+            "Напоминания",
+            "Статистика прогресса"
+        ],
+
+        tech: [
+            "HTML",
+            "CSS",
+            "JavaScript",
+            "LocalStorage"
+        ]
+    },
+
+
+    {
+        title: "EcoCity",
+        type: "website",
+        difficulty: "easy",
+        audience: "all",
+
+        description:
+        "Интерактивный сайт, который помогает людям сделать свой город экологичнее.",
+
+        problem:
+        "Многие люди не знают, как простыми действиями уменьшить количество мусора и загрязнение окружающей среды.",
+
+        solution:
+        "Сайт показывает полезные экологические советы, карту пунктов переработки и задания.",
+
+        features: [
+            "Экологические задания",
+            "Карта переработки",
+            "Система баллов",
+            "Экологический рейтинг"
+        ],
+
+        tech: [
+            "HTML",
+            "CSS",
+            "JavaScript",
+            "Maps API"
+        ]
+    },
+
+
+    {
+        title: "AI Mentor",
+        type: "ai",
+        difficulty: "hard",
+        audience: "developers",
+
+        description:
+        "AI-помощник для начинающих программистов, который объясняет ошибки простым языком.",
+
+        problem:
+        "Начинающие разработчики часто сталкиваются с ошибками, которые не понимают.",
+
+        solution:
+        "Пользователь вставляет ошибку или код, а AI объясняет проблему и предлагает вариант исправления.",
+
+        features: [
+            "Анализ кода",
+            "Объяснение ошибок",
+            "Подсказки",
+            "История запросов"
+        ],
+
+        tech: [
+            "HTML",
+            "CSS",
+            "JavaScript",
+            "AI API"
+        ]
+    },
+
+
+    {
+        title: "QuizBattle",
+        type: "game",
+        difficulty: "medium",
+        audience: "school",
+
+        description:
+        "Онлайн-игра, где школьники соревнуются друг с другом в интеллектуальных викторинах.",
+
+        problem:
+        "Обычное изучение материала может быть скучным и быстро надоедать.",
+
+        solution:
+        "Игровая система превращает обучение в соревнование с рейтингами и достижениями.",
+
+        features: [
+            "Онлайн-викторины",
+            "Рейтинг игроков",
+            "Система уровней",
+            "Достижения"
+        ],
+
+        tech: [
+            "HTML",
+            "CSS",
+            "JavaScript",
+            "Firebase"
+        ]
+    },
+
+
+    {
+        title: "SkillSpace",
+        type: "education",
+        difficulty: "medium",
+        audience: "students",
+
+        description:
+        "Платформа, где пользователи могут изучать новые навыки через короткие интерактивные уроки.",
+
+        problem:
+        "Большие онлайн-курсы требуют много времени и часто перегружают новичков.",
+
+        solution:
+        "Каждый навык разбивается на небольшие уроки продолжительностью 5–10 минут.",
+
+        features: [
+            "Мини-уроки",
+            "Тесты",
+            "Прогресс обучения",
+            "Сертификаты"
+        ],
+
+        tech: [
+            "HTML",
+            "CSS",
+            "JavaScript",
+            "Node.js"
+        ]
+    },
+
+
+    {
+        title: "BusinessBox",
+        type: "website",
+        difficulty: "hard",
+        audience: "business",
+
+        description:
+        "Онлайн-панель для малого бизнеса, которая помогает контролировать продажи, клиентов и задачи.",
+
+        problem:
+        "Небольшим компаниям сложно контролировать все рабочие процессы одновременно.",
+
+        solution:
+        "Один простой dashboard объединяет клиентов, продажи, задачи и статистику.",
+
+        features: [
+            "CRM клиентов",
+            "Продажи",
+            "Рабочие задачи",
+            "Графики статистики"
+        ],
+
+        tech: [
+            "HTML",
+            "CSS",
+            "JavaScript",
+            "Node.js",
+            "Database"
+        ]
+    },
+
+
+    {
+        title: "FocusRoom",
+        type: "app",
+        difficulty: "easy",
+        audience: "students",
+
+        description:
+        "Приложение для концентрации, которое помогает пользователю эффективно работать и учиться.",
+
+        problem:
+        "Телефон, социальные сети и уведомления постоянно отвлекают от работы.",
+
+        solution:
+        "Приложение использует таймер фокусировки, музыку и статистику продуктивности.",
+
+        features: [
+            "Pomodoro таймер",
+            "Фоновая музыка",
+            "Статистика",
+            "Система целей"
+        ],
+
+        tech: [
+            "HTML",
+            "CSS",
+            "JavaScript"
+        ]
+    },
+
+
+    {
+        title: "CodeQuest",
+        type: "game",
+        difficulty: "hard",
+        audience: "developers",
+
+        description:
+        "Игра, в которой игрок изучает программирование, решая задачи и проходя уровни.",
+
+        problem:
+        "Начинающим разработчикам бывает трудно сохранять интерес во время изучения кода.",
+
+        solution:
+        "Программирование превращается в игру с миссиями, уровнями и наградами.",
+
+        features: [
+            "Игровые уровни",
+            "Задачи по программированию",
+            "Система опыта",
+            "Рейтинг игроков"
+        ],
+
+        tech: [
+            "HTML",
+            "CSS",
+            "JavaScript",
+            "Canvas"
+        ]
+    }
+
+];
+
+
+/* ==========================================
+   ПЕРЕМЕННЫЕ
+========================================== */
+
+let currentIdea = ideas[0];
+
+let generatedCount =
+    Number(localStorage.getItem("generatedCount")) || 0;
+
+let favorites =
+    JSON.parse(localStorage.getItem("favorites")) || [];
+
+
+/* ==========================================
+   НАЗВАНИЯ
+========================================== */
+
+const typeNames = {
+
+    website: "🌐 Сайт",
+
+    app: "📱 Мобильное приложение",
+
+    ai: "🤖 AI / Нейросеть",
+
+    game: "🎮 Игра",
+
+    education: "🎓 Образование"
+
+};
+
+
+const difficultyNames = {
+
+    easy: "🟢 Лёгкая сложность",
+
+    medium: "🟡 Средняя сложность",
+
+    hard: "🔴 Сложная сложность"
+
+};
+
+
+const audienceNames = {
+
+    students: "🎓 Студенты",
+
+    school: "📚 Школьники",
+
+    business: "💼 Бизнес",
+
+    developers: "💻 Разработчики"
+
+};
+
+
+/* ==========================================
+   ГЕНЕРАЦИЯ
+========================================== */
+
+function generateIdea() {
+
+    const type =
+        document.getElementById("type").value;
+
+    const difficulty =
+        document.getElementById("difficulty").value;
+
+    const audience =
+        document.getElementById("audience").value;
+
+
+    let filtered = ideas.filter(idea => {
+
+        const typeMatch =
+            type === "all" || idea.type === type;
+
+        const difficultyMatch =
+            difficulty === "all" ||
+            idea.difficulty === difficulty;
+
+        const audienceMatch =
+            audience === "all" ||
+            idea.audience === audience;
+
+        return typeMatch &&
+               difficultyMatch &&
+               audienceMatch;
+
+    });
+
+
+    if (filtered.length === 0) {
+
+        filtered = ideas;
+
+        showToast(
+            "Для таких параметров пока нет идеи"
+        );
+
+    }
+
+
+    const randomIndex =
+        Math.floor(Math.random() * filtered.length);
+
+    currentIdea = filtered[randomIndex];
+
+
+    renderIdea(currentIdea);
+
+
+    generatedCount++;
+
+    localStorage.setItem(
+        "generatedCount",
+        generatedCount
+    );
+
+    updateStats();
+
+}
+
+
+/* ==========================================
+   ОТОБРАЖЕНИЕ
+========================================== */
+
+function renderIdea(idea) {
+
+    document.getElementById("ideaTitle")
+        .textContent = idea.title;
+
+    document.getElementById("ideaDescription")
+        .textContent = idea.description;
+
+    document.getElementById("problem")
+        .textContent = idea.problem;
+
+    document.getElementById("solution")
+        .textContent = idea.solution;
+
+
+    document.getElementById("typeTag")
+        .textContent = typeNames[idea.type];
+
+    document.getElementById("difficultyTag")
+        .textContent = difficultyNames[idea.difficulty];
+
+    document.getElementById("audienceTag")
+        .textContent =
+            idea.audience === "all"
+            ? "👥 Для всех"
+            : audienceNames[idea.audience];
+
+
+    const features =
+        document.getElementById("features");
+
+    features.innerHTML = "";
+
+
+    idea.features.forEach(feature => {
+
+        const div =
+            document.createElement("div");
+
+        div.className = "feature";
+
+        div.textContent = feature;
+
+        features.appendChild(div);
+
+    });
+
+
+    const tech =
+        document.getElementById("tech");
+
+    tech.innerHTML = "";
+
+
+    idea.tech.forEach(item => {
+
+        const span =
+            document.createElement("span");
+
+        span.textContent = item;
+
+        tech.appendChild(span);
+
+    });
+
+}
+
+
+/* ==========================================
+   КОПИРОВАНИЕ
+========================================== */
+
+function copyIdea() {
+
+    const text = `
+${currentIdea.title}
+
+${currentIdea.description}
+
+Проблема:
+${currentIdea.problem}
+
+Решение:
+${currentIdea.solution}
+
+Функции:
+${currentIdea.features.join(", ")}
+
+Технологии:
+${currentIdea.tech.join(", ")}
+`;
+
+    navigator.clipboard.writeText(text);
+
+    showToast("📋 Идея скопирована!");
+
+}
+
+
+/* ==========================================
+   ИЗБРАННОЕ
+========================================== */
+
+function saveFavorite() {
+
+    const exists =
+        favorites.some(
+            item => item.title === currentIdea.title
+        );
+
+
+    if (exists) {
+
+        showToast("❤️ Уже в избранном");
+
+        return;
+
+    }
+
+
+    favorites.push(currentIdea);
+
+
+    localStorage.setItem(
+        "favorites",
+        JSON.stringify(favorites)
+    );
+
+
+    renderFavorites();
+
+    updateStats();
+
+    showToast("❤️ Добавлено в избранное");
+
+}
+
+
+/* ==========================================
+   ОТОБРАЖЕНИЕ ИЗБРАННОГО
+========================================== */
+
+function renderFavorites() {
+
+    const list =
+        document.getElementById("favoriteList");
+
+
+    list.innerHTML = "";
+
+
+    if (favorites.length === 0) {
+
+        list.innerHTML =
+            `<div class="empty">
+                Здесь появятся сохранённые проекты
+            </div>`;
+
+        return;
+
+    }
+
+
+    favorites.forEach((idea, index) => {
+
+        const item =
+            document.createElement("div");
+
+        item.className = "favorite-item";
+
+
+        item.innerHTML = `
+            <button
+                class="delete-favorite"
+                onclick="deleteFavorite(${index})">
+                ×
+            </button>
+
+            <h3>${idea.title}</h3>
+
+            <p>${idea.description}</p>
+        `;
+
+
+        list.appendChild(item);
+
+    });
+
+}
+
+
+/* ==========================================
+   УДАЛЕНИЕ
+========================================== */
+
+function deleteFavorite(index) {
+
+    favorites.splice(index, 1);
+
+
+    localStorage.setItem(
+        "favorites",
+        JSON.stringify(favorites)
+    );
+
+
+    renderFavorites();
+
+    updateStats();
+
+    showToast("Удалено");
+
+}
+
+
+/* ==========================================
+   ОЧИСТКА
+========================================== */
+
+function clearFavorites() {
+
+    if (favorites.length === 0) {
+
+        showToast("Избранное уже пустое");
+
+        return;
+
+    }
+
+
+    favorites = [];
+
+
+    localStorage.setItem(
+        "favorites",
+        JSON.stringify(favorites)
+    );
+
+
+    renderFavorites();
+
+    updateStats();
+
+    showToast("Избранное очищено");
+
+}
+
+
+/* ==========================================
+   СТАТИСТИКА
+========================================== */
+
+function updateStats() {
+
+    document.getElementById(
+        "generatedCount"
+    ).textContent = generatedCount;
+
+
+    document.getElementById(
+        "favoriteCount"
+    ).textContent = favorites.length;
+
+}
+
+
+/* ==========================================
+   УВЕДОМЛЕНИЯ
+========================================== */
+
+function showToast(message) {
+
+    const toast =
+        document.getElementById("toast");
+
+
+    toast.textContent = message;
+
+    toast.classList.add("show");
+
+
+    setTimeout(() => {
+
+        toast.classList.remove("show");
+
+    }, 2200);
+
+}
+
+
+/* ==========================================
+   ЗАПУСК
+========================================== */
+
+renderIdea(currentIdea);
+
+renderFavorites();
+
+updateStats();
+
+</script>
+
+</body>
+</html>
